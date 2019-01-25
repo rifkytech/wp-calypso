@@ -45,6 +45,7 @@ import { logSectionResponseTime } from './analytics';
 import { setCurrentUserOnReduxStore } from 'lib/redux-helpers';
 import analytics from '../lib/analytics';
 import { getLanguage, filterLanguageRevisions } from 'lib/i18n-utils';
+import { isSupportSession, getSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:pages' );
 
@@ -263,7 +264,7 @@ function getDefaultContext( request ) {
 		devDocsURL: '/devdocs',
 		store: createReduxStore( initialServerState ),
 		bodyClasses,
-		isLoggedIn: !! request.cookies.wordpress_logged_in || !! request.get( 'x-support-session' ),
+		isLoggedIn: !! request.cookies.wordpress_logged_in || isSupportSession( request ),
 	} );
 
 	context.app = {
@@ -358,7 +359,11 @@ function setUpLoggedInRoute( req, res, next ) {
 
 		debug( 'Issuing API call to fetch user object' );
 
-		const userPromise = user( req.cookies.wordpress_logged_in, geoCountry )
+		const userPromise = user(
+			req.cookies.wordpress_logged_in,
+			geoCountry,
+			getSupportSession( req )
+		)
 			.then( data => {
 				const end = new Date().getTime() - start;
 
