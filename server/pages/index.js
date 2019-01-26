@@ -40,6 +40,7 @@ import stateCache from 'state-cache';
 import { createReduxStore } from 'state';
 import initialReducer from 'state/reducer';
 import { DESERIALIZE, LOCALE_SET } from 'state/action-types';
+import { supportSessionActivate } from 'state/support/actions';
 import { login } from 'lib/paths';
 import { logSectionResponseTime } from './analytics';
 import { setCurrentUserOnReduxStore } from 'lib/redux-helpers';
@@ -319,6 +320,10 @@ function setUpLoggedInRoute( req, res, next ) {
 	res.set( {
 		'X-Frame-Options': 'SAMEORIGIN',
 	} );
+
+	if ( isSupportSession( req ) ) {
+		req.context.store.dispatch( supportSessionActivate() );
+	}
 
 	const LANG_REVISION_FILE_URL = 'https://widgets.wp.com/languages/calypso/lang-revisions.json';
 	const langPromise = superagent

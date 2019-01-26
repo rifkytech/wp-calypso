@@ -30,6 +30,7 @@ import { SERIALIZE } from 'state/action-types';
 import stateCache from 'state-cache';
 import { getNormalizedPath } from 'isomorphic-routing';
 import { logToLogstash } from 'state/logstash/actions';
+import { isSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:server-render' );
 const HOUR_IN_MS = 3600000;
@@ -162,6 +163,10 @@ export function serverRender( req, res ) {
 			reduxSubtrees = cacheableReduxSubtrees.concat( [ 'ui', 'themes' ] );
 		} else {
 			reduxSubtrees = cacheableReduxSubtrees;
+		}
+
+		if ( isSupportSession( req ) ) {
+			reduxSubtrees = reduxSubtrees.concat( 'support' );
 		}
 
 		// Send state to client
