@@ -1,12 +1,8 @@
 /**
  * Internal dependencies
  */
-import { SUPPORT_SESSION_STATE } from './reducer';
+import { SESSION_ACTIVE, SESSION_EXPIRED } from './reducer';
 
-export function isSupportSession( state ) {
-	const { supportSession } = state.support;
-	return (
-		supportSession === SUPPORT_SESSION_STATE.ACTIVE ||
-		supportSession === SUPPORT_SESSION_STATE.EXPIRED
-	);
+export function isSupportSession( { support: { supportSession: state } } ) {
+	return state === SESSION_ACTIVE || state === SESSION_EXPIRED;
 }
