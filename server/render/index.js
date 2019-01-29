@@ -166,7 +166,7 @@ export function serverRender( req, res ) {
 		}
 
 		if ( isSupportSession( req ) ) {
-			reduxSubtrees = reduxSubtrees.concat( 'support' );
+			reduxSubtrees.push( 'support' );
 		}
 
 		// Send state to client
