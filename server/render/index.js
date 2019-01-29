@@ -157,17 +157,12 @@ export function serverRender( req, res ) {
 		links = getDocumentHeadLink( context.store.getState() );
 
 		const cacheableReduxSubtrees = [ 'documentHead' ];
-		let reduxSubtrees;
+		const isomorphicSubtrees = isSectionIsomorphic( context.store.getState() )
+			? [ 'themes', 'ui' ]
+			: [];
+		const supportSubtrees = isSupportSession( req ) ? [ 'support' ] : [];
 
-		if ( isSectionIsomorphic( context.store.getState() ) ) {
-			reduxSubtrees = cacheableReduxSubtrees.concat( [ 'ui', 'themes' ] );
-		} else {
-			reduxSubtrees = cacheableReduxSubtrees;
-		}
-
-		if ( isSupportSession( req ) ) {
-			reduxSubtrees.push( 'support' );
-		}
+		const reduxSubtrees = [ ...cacheableReduxSubtrees, ...isomorphicSubtrees, ...supportSubtrees ];
 
 		// Send state to client
 		context.initialReduxState = pick( context.store.getState(), reduxSubtrees );
