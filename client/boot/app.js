@@ -18,11 +18,18 @@ import initialReducer from 'state/reducer';
 import { getInitialState, persistOnChange } from 'state/initial-state';
 import detectHistoryNavigation from 'lib/detect-history-navigation';
 import userFactory from 'lib/user';
+import { isSupportSession } from 'lib/support-session';
+import localStorageBypass from 'lib/support/localstorage-bypass';
 
 const debug = debugFactory( 'calypso' );
 
 const boot = currentUser => {
 	debug( "Starting Calypso. Let's do this." );
+
+	if ( isSupportSession() ) {
+		const allowedLocalStorageKeys = [ 'debug' ];
+		localStorageBypass( allowedLocalStorageKeys );
+	}
 
 	const project = require( `./project/${ PROJECT_NAME }` );
 	utils();
