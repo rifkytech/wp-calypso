@@ -27,6 +27,8 @@ const boot = currentUser => {
 	debug( "Starting Calypso. Let's do this." );
 
 	if ( isSupportSession() ) {
+		// Bypass localStorage to avoid conflicts between simultaneous support sessions.
+		// NOTE: localforage is bypassed separately as part of its configuration.
 		const allowedLocalStorageKeys = [ 'debug' ];
 		localStorageBypass( allowedLocalStorageKeys );
 	}
