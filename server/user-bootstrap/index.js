@@ -55,6 +55,7 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 
 		// create HTTP Request object
 		const req = superagent.get( url );
+		req.set( 'User-Agent', 'WordPress.com Calypso' );
 
 		if ( authCookieValue ) {
 			authCookieValue = decodeURIComponent( authCookieValue );
@@ -72,7 +73,6 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 			req.set( 'X-Forwarded-GeoIP-Country-Code', geoCountry );
 			req.set( 'Authorization', 'X-WPCALYPSO ' + hash );
 			req.set( 'Cookie', AUTH_COOKIE_NAME + '=' + authCookieValue );
-			req.set( 'User-Agent', 'WordPress.com Calypso' );
 		} else if ( supportSession ) {
 			const hmac = crypto.createHmac( 'md5', SUPPORT_SESSION_API_KEY );
 			hmac.update( supportSession );
