@@ -48,6 +48,10 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 			);
 			return;
 		}
+		if ( ! authCookieValue && ! supportSession ) {
+			reject( new Error( 'Cannot bootstrap without an auth cookie or a support session.' ) );
+			return;
+		}
 
 		// create HTTP Request object
 		const req = superagent.get( url );
@@ -76,9 +80,6 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 			req.set( 'Authorization', `X-WPCALYPSO-SUPPORT-SESSION ${ hash }` );
 
 			setSupportSession( req, supportSession );
-		} else {
-			reject( new Error( 'Cannot bootstrap without an auth cookie or a support session.' ) );
-			return;
 		}
 
 		// start the request
