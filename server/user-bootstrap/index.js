@@ -74,6 +74,15 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 			req.set( 'Authorization', 'X-WPCALYPSO ' + hash );
 			req.set( 'Cookie', AUTH_COOKIE_NAME + '=' + authCookieValue );
 		} else if ( supportSession ) {
+			if ( typeof SUPPORT_SESSION_API_KEY !== 'string' ) {
+				reject(
+					new Error(
+						'Unable to boostrap user because of invalid SUPPORT SESSION API key in secrets.json'
+					)
+				);
+				return;
+			}
+
 			const hmac = crypto.createHmac( 'md5', SUPPORT_SESSION_API_KEY );
 			hmac.update( supportSession );
 			const hash = hmac.digest( 'hex' );
