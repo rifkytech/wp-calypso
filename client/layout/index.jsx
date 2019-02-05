@@ -103,7 +103,6 @@ class Layout extends Component {
 				`is-section-${ this.props.sectionName }`,
 				`focus-${ this.props.currentLayoutFocus }`,
 				{ 'is-support-session': this.props.isSupportSession },
-				{ 'is-support-user': this.props.isSupportUser },
 				{ 'has-no-sidebar': ! this.props.hasSidebar },
 				{ 'has-chat': this.props.chatIsOpen },
 				{ 'has-no-masterbar': this.props.masterbarIsHidden }
@@ -179,8 +178,7 @@ export default connect( state => {
 	return {
 		masterbarIsHidden: ! masterbarIsVisible( state ) || 'signup' === sectionName,
 		isLoading: isSectionLoading( state ),
-		isSupportSession: isSupportSession( state ),
-		isSupportUser: state.support.isSupportUser,
+		isSupportSession: state.support.isSupportUser || isSupportSession( state ),
 		sectionGroup,
 		sectionName,
 		hasSidebar: hasSidebar( state ),
