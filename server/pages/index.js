@@ -46,7 +46,7 @@ import { logSectionResponseTime } from './analytics';
 import { setCurrentUserOnReduxStore } from 'lib/redux-helpers';
 import analytics from '../lib/analytics';
 import { getLanguage, filterLanguageRevisions } from 'lib/i18n-utils';
-import { isSupportSession, getSupportSession } from '../support-session';
+import { isSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:pages' );
 
@@ -344,7 +344,6 @@ function setUpLoggedInRoute( req, res, next ) {
 	const setupRequests = [ langPromise ];
 
 	if ( config.isEnabled( 'wpcom-user-bootstrap' ) ) {
-		const geoCountry = req.get( 'x-geoip-country-code' ) || '';
 		const protocol = req.get( 'X-Forwarded-Proto' ) === 'https' ? 'https' : 'http';
 
 		redirectUrl = login( {
@@ -364,11 +363,7 @@ function setUpLoggedInRoute( req, res, next ) {
 
 		debug( 'Issuing API call to fetch user object' );
 
-		const userPromise = user(
-			req.cookies.wordpress_logged_in,
-			geoCountry,
-			getSupportSession( req )
-		)
+		const userPromise = user( req )
 			.then( data => {
 				const end = new Date().getTime() - start;
 
@@ -803,11 +798,10 @@ module.exports = function() {
 
 		// Maybe not logged in, note that you need docker to test this properly
 		const user = require( 'user-bootstrap' );
-		const geoCountry = req.get( 'x-geoip-country-code' ) || '';
 
 		debug( 'Issuing API call to fetch user object' );
 
-		user( req.cookies.wordpress_logged_in, geoCountry )
+		user( req )
 			.then( data => {
 				const activeFlags = get( data, 'meta.data.flags.active_flags', [] );
 

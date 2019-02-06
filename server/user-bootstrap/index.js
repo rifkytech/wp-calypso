@@ -13,7 +13,7 @@ import crypto from 'crypto';
 import { filterUserObject } from 'lib/user/shared-utils';
 import { getActiveTestNames } from 'lib/abtest/utility';
 import config from 'config';
-import { setSupportSession } from '../support-session';
+import { getSupportSession, setSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:bootstrap' ),
 	API_KEY = config( 'wpcom_calypso_rest_api_key' ),
@@ -32,13 +32,15 @@ const debug = debugFactory( 'calypso:bootstrap' ),
 /**
  * Requests the current user for user bootstrap.
  *
- * @param {(string|undefined)} authCookieValue The authentication cookie, if there is one.
- * @param {string}             geoCountry      The GeoIP country code.
- * @param {(string|undefined)} supportSession  The support session.
+ * @param {object} request An Express request.
  *
  * @returns {Promise<object>} A promise for a user object.
  */
-module.exports = function( authCookieValue, geoCountry, supportSession ) {
+module.exports = function( request ) {
+	const authCookieValue = request.cookies.wordpress_logged_in;
+	const geoCountry = request.get( 'x-geoip-country-code' ) || '';
+	const supportSession = getSupportSession( request );
+
 	return new Promise( ( resolve, reject ) => {
 		if ( authCookieValue && supportSession ) {
 			reject(
@@ -59,7 +61,7 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 		req.set( 'X-Forwarded-GeoIP-Country-Code', geoCountry );
 
 		if ( authCookieValue ) {
-			authCookieValue = decodeURIComponent( authCookieValue );
+			const decodedAuthCookieValue = decodeURIComponent( authCookieValue );
 
 			if ( typeof API_KEY !== 'string' ) {
 				return reject(
@@ -68,12 +70,11 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 			}
 
 			const hmac = crypto.createHmac( 'md5', API_KEY );
-			hmac.update( authCookieValue );
+			hmac.update( decodedAuthCookieValue );
 			const hash = hmac.digest( 'hex' );
 
-			req.set( 'X-Forwarded-GeoIP-Country-Code', geoCountry );
 			req.set( 'Authorization', 'X-WPCALYPSO ' + hash );
-			req.set( 'Cookie', AUTH_COOKIE_NAME + '=' + authCookieValue );
+			req.set( 'Cookie', AUTH_COOKIE_NAME + '=' + decodedAuthCookieValue );
 		} else if ( supportSession ) {
 			if ( typeof SUPPORT_SESSION_API_KEY !== 'string' ) {
 				reject(
