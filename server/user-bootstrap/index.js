@@ -56,6 +56,7 @@ module.exports = function( authCookieValue, geoCountry, supportSession ) {
 		// create HTTP Request object
 		const req = superagent.get( url );
 		req.set( 'User-Agent', 'WordPress.com Calypso' );
+		req.set( 'X-Forwarded-GeoIP-Country-Code', geoCountry );
 
 		if ( authCookieValue ) {
 			authCookieValue = decodeURIComponent( authCookieValue );
