@@ -40,13 +40,11 @@ import stateCache from 'state-cache';
 import { createReduxStore } from 'state';
 import initialReducer from 'state/reducer';
 import { DESERIALIZE, LOCALE_SET } from 'state/action-types';
-import { supportSessionActivate } from 'state/support/actions';
 import { login } from 'lib/paths';
 import { logSectionResponseTime } from './analytics';
 import { setCurrentUserOnReduxStore } from 'lib/redux-helpers';
 import analytics from '../lib/analytics';
 import { getLanguage, filterLanguageRevisions } from 'lib/i18n-utils';
-import { isSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:pages' );
 
@@ -221,6 +219,8 @@ function getDefaultContext( request ) {
 	const cacheKey = getNormalizedPath( request.path, request.query );
 	const geoLocation = ( request.headers[ 'x-geoip-country-code' ] || '' ).toLowerCase();
 	const isDebug = calypsoEnv === 'development' || request.query.debug !== undefined;
+	const isSupportSession = !! request.get( 'x-support-session' );
+	const isLoggedIn = isSupportSession || !! request.cookies.wordpress_logged_in;
 
 	if ( cacheKey ) {
 		const serializeCachedServerState = stateCache.get( cacheKey ) || {};
@@ -265,7 +265,8 @@ function getDefaultContext( request ) {
 		devDocsURL: '/devdocs',
 		store: createReduxStore( initialServerState ),
 		bodyClasses,
-		isLoggedIn: !! request.cookies.wordpress_logged_in || isSupportSession( request ),
+		isLoggedIn,
+		isSupportSession,
 	} );
 
 	context.app = {
@@ -320,10 +321,6 @@ function setUpLoggedInRoute( req, res, next ) {
 	res.set( {
 		'X-Frame-Options': 'SAMEORIGIN',
 	} );
-
-	if ( isSupportSession( req ) ) {
-		req.context.store.dispatch( supportSessionActivate() );
-	}
 
 	const LANG_REVISION_FILE_URL = 'https://widgets.wp.com/languages/calypso/lang-revisions.json';
 	const langPromise = superagent
