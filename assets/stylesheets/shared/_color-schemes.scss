@@ -341,34 +341,34 @@
 	}
 
 	&.is-sakura {
-		--color-primary: #{$muriel-gray-900};
-		--color-primary-rgb: #{hex-to-rgb( $muriel-gray-900 )};
-		--color-primary-light: #{$muriel-gray-300};
-		--color-primary-light-rgb: #{hex-to-rgb( $muriel-gray-300 )};
-		--color-primary-dark: #{$muriel-gray-700};
-		--color-primary-dark-rgb: #{hex-to-rgb( $muriel-gray-700 )};
-		--color-primary-0: #{$muriel-blue-0};
-		--color-primary-0-rgb: #{hex-to-rgb( $muriel-gray-0 )};
-		--color-primary-50: #{$muriel-gray-50};
-		--color-primary-50-rgb: #{hex-to-rgb( $muriel-gray-50 )};
-		--color-primary-100: #{$muriel-gray-100};
-		--color-primary-100-rgb: #{hex-to-rgb( $muriel-gray-100 )};
-		--color-primary-200: #{$muriel-gray-200};
-		--color-primary-200-rgb: #{hex-to-rgb( $muriel-gray-200 )};
-		--color-primary-300: #{$muriel-gray-300};
-		--color-primary-300-rgb: #{hex-to-rgb( $muriel-gray-300 )};
-		--color-primary-400: #{$muriel-gray-400};
-		--color-primary-400-rgb: #{hex-to-rgb( $muriel-gray-400 )};
-		--color-primary-500: #{$muriel-gray-500};
-		--color-primary-500-rgb: #{hex-to-rgb( $muriel-gray-500 )};
-		--color-primary-600: #{$muriel-gray-600};
-		--color-primary-600-rgb: #{hex-to-rgb( $muriel-gray-600 )};
-		--color-primary-700: #{$muriel-gray-700};
-		--color-primary-700-rgb: #{hex-to-rgb( $muriel-gray-700 )};
-		--color-primary-800: #{$muriel-gray-800};
-		--color-primary-800-rgb: #{hex-to-rgb( $muriel-gray-800 )};
-		--color-primary-900: #{$muriel-gray-900};
-		--color-primary-900-rgb: #{hex-to-rgb( $muriel-gray-900 )};
+		--color-primary: #{$muriel-celadon-600};
+		--color-primary-rgb: #{hex-to-rgb( $muriel-celadon-600 )};
+		--color-primary-light: #{$muriel-celadon-300};
+		--color-primary-light-rgb: #{hex-to-rgb( $muriel-celadon-300 )};
+		--color-primary-dark: #{$muriel-celadon-800};
+		--color-primary-dark-rgb: #{hex-to-rgb( $muriel-celadon-800 )};
+		--color-primary-0: #{$muriel-celadon-0};
+		--color-primary-0-rgb: #{hex-to-rgb( $muriel-celadon-0 )};
+		--color-primary-50: #{$muriel-celadon-50};
+		--color-primary-50-rgb: #{hex-to-rgb( $muriel-celadon-50 )};
+		--color-primary-100: #{$muriel-celadon-100};
+		--color-primary-100-rgb: #{hex-to-rgb( $muriel-celadon-100 )};
+		--color-primary-200: #{$muriel-celadon-200};
+		--color-primary-200-rgb: #{hex-to-rgb( $muriel-celadon-200 )};
+		--color-primary-300: #{$muriel-celadon-300};
+		--color-primary-300-rgb: #{hex-to-rgb( $muriel-celadon-300 )};
+		--color-primary-400: #{$muriel-celadon-400};
+		--color-primary-400-rgb: #{hex-to-rgb( $muriel-celadon-400 )};
+		--color-primary-500: #{$muriel-celadon-500};
+		--color-primary-500-rgb: #{hex-to-rgb( $muriel-celadon-500 )};
+		--color-primary-600: #{$muriel-celadon-600};
+		--color-primary-600-rgb: #{hex-to-rgb( $muriel-celadon-600 )};
+		--color-primary-700: #{$muriel-celadon-700};
+		--color-primary-700-rgb: #{hex-to-rgb( $muriel-celadon-700 )};
+		--color-primary-800: #{$muriel-celadon-800};
+		--color-primary-800-rgb: #{hex-to-rgb( $muriel-celadon-800 )};
+		--color-primary-900: #{$muriel-celadon-900};
+		--color-primary-900-rgb: #{hex-to-rgb( $muriel-celadon-900 )};
 
 		--color-accent: #{$muriel-hot-blue-500};
 		--color-accent-rgb: #{hex-to-rgb( $muriel-hot-blue-500 )};
@@ -408,7 +408,7 @@
 		--color-button-primary-scary-background-hover: #{$muriel-hot-red-400};
 
 		--masterbar-color: #{$muriel-white};
-		--masterbar-border-color: #{$muriel-gray-600};
+		--masterbar-border-color: #{$muriel-celadon-600};
 		--masterbar-item-new-editor-background: #{$muriel-gray-500};
 		--masterbar-item-new-editor-hover-background: #{$muriel-gray-400};
 		--masterbar-toggle-drafts-editor-background: #{$muriel-gray-400};
