@@ -25,6 +25,13 @@ export default function( translate ) {
 				cssClass: 'is-classic-blue',
 			},
 		},
+		{
+			label: translate( 'Sakura' ),
+			value: 'sakura',
+			thumbnail: {
+				cssClass: 'is-sakura',
+			},
+		},
 		config.isEnabled( 'me/account/color-schemes/laser-black' ) && {
 			label: translate( 'Laser Black' ),
 			value: 'laser-black',
