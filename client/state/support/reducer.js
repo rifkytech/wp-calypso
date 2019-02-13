@@ -8,7 +8,6 @@ import debugFactory from 'debug';
 /**
  * Internal dependencies
  */
-import { combineReducers } from 'state/utils';
 import { SUPPORT_SESSION_TRANSITION } from 'state/action-types';
 
 const debug = debugFactory( 'calypso:state:support:actions' );
@@ -17,7 +16,7 @@ export const SESSION_NONE = 'none';
 export const SESSION_ACTIVE = 'active';
 export const SESSION_EXPIRED = 'expired';
 
-function supportSession( state = SESSION_NONE, { type, nextState } ) {
+export default function supportSession( state = SESSION_NONE, { type, nextState } ) {
 	switch ( type ) {
 		case SUPPORT_SESSION_TRANSITION:
 			if (
@@ -34,5 +33,3 @@ function supportSession( state = SESSION_NONE, { type, nextState } ) {
 			return state;
 	}
 }
-
-export default combineReducers( { supportSession } );
