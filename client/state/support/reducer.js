@@ -17,12 +17,6 @@ export const SESSION_NONE = 'none';
 export const SESSION_ACTIVE = 'active';
 export const SESSION_EXPIRED = 'expired';
 
-export const SUPPORT_SESSION_STATE = {
-	NONE: 'none',
-	ACTIVE: 'active',
-	EXPIRED: 'expired',
-};
-
 function supportSession( state = SESSION_NONE, { type, nextState } ) {
 	switch ( type ) {
 		case SUPPORT_SESSION_TRANSITION:
