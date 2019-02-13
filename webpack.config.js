@@ -209,6 +209,7 @@ function getWebpackConfig( {
 					terserOptions: {
 						ecma: 5,
 						safari10: true,
+						mangle: calypsoEnv !== 'desktop',
 					},
 				} ),
 			],
