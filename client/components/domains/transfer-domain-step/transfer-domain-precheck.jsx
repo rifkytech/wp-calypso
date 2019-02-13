@@ -26,7 +26,7 @@ import {
 } from 'lib/url/support';
 import FormTextInput from 'components/forms/form-text-input';
 import FormInputValidation from 'components/forms/form-input-validation';
-import { isSupportSession } from 'state/support/selectors';
+import { isSupportSession as hasEnteredSupportSession } from 'state/support/selectors';
 
 class TransferDomainPrecheck extends React.Component {
 	static propTypes = {
@@ -338,11 +338,11 @@ class TransferDomainPrecheck extends React.Component {
 	}
 
 	render() {
-		const { authCodeValid, translate, unlocked } = this.props;
+		const { authCodeValid, translate, unlocked, isSupportSession } = this.props;
 		const { currentStep } = this.state;
 		// We disallow HEs to submit the transfer
 		const disableButton =
-			false === unlocked || ! authCodeValid || currentStep < 3 || this.props.isSupportSession;
+			false === unlocked || ! authCodeValid || currentStep < 3 || isSupportSession;
 
 		return (
 			<div className="transfer-domain-step__precheck">
@@ -416,7 +416,7 @@ const recordContinueButtonClick = ( domain_name, losing_registrar, losing_regist
 
 export default connect(
 	state => ( {
-		isSupportSession: isSupportSession( state ),
+		isSupportSession: hasEnteredSupportSession( state ),
 	} ),
 	{
 		recordNextStep,
