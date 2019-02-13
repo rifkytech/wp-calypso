@@ -27,7 +27,6 @@ const config = {
 };
 
 let _ready = false;
-
 // Promise that resolves when our localforage configuration has been applied
 const localForagePromise = localforage
 	.defineDriver( localforageBypass )
