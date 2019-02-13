@@ -28,7 +28,7 @@ import { getLanguage } from 'lib/i18n-utils/utils';
 import localforage from 'lib/localforage';
 import { getActiveTestNames, ABTEST_LOCALSTORAGE_KEY } from 'lib/abtest/utility';
 
-/*
+/**
  * User component
  */
 function User() {
@@ -99,7 +99,7 @@ User.prototype.initialize = function() {
 	this.fetch();
 };
 
-/*
+/**
  * Clear localStorage when we detect that there is a mismatch between the ID
  * of the user stored in localStorage and the current user ID
  **/
@@ -112,7 +112,7 @@ User.prototype.clearStoreIfChanged = function( userId ) {
 	}
 };
 
-/*
+/**
  * Get user data
  */
 User.prototype.get = function() {
@@ -217,7 +217,7 @@ User.prototype.getLanguage = function() {
 	return getLanguage( this.data.localeSlug );
 };
 
-/*
+/**
  * Get the URL for a user's avatar (from Gravatar). Uses
  * the short-form query string parameters as options,
  * sets some sane defaults.
@@ -258,7 +258,7 @@ User.prototype.clear = function( onClear ) {
 	}
 };
 
-/*
+/**
  * Sends the user an email with a link to verify their account if they
  * are unverified.
  */
