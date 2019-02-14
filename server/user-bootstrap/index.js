@@ -13,7 +13,6 @@ import crypto from 'crypto';
 import { filterUserObject } from 'lib/user/shared-utils';
 import { getActiveTestNames } from 'lib/abtest/utility';
 import config from 'config';
-import { getSupportSession, setSupportSession } from '../support-session';
 
 const debug = debugFactory( 'calypso:bootstrap' ),
 	API_KEY = config( 'wpcom_calypso_rest_api_key' ),
@@ -39,7 +38,7 @@ const debug = debugFactory( 'calypso:bootstrap' ),
 module.exports = function( request ) {
 	const authCookieValue = request.cookies.wordpress_logged_in;
 	const geoCountry = request.get( 'x-geoip-country-code' ) || '';
-	const supportSession = getSupportSession( request );
+	const supportSession = request.get( 'x-support-session' );
 
 	return new Promise( ( resolve, reject ) => {
 		if ( authCookieValue && supportSession ) {
@@ -90,7 +89,7 @@ module.exports = function( request ) {
 			const hash = hmac.digest( 'hex' );
 			req.set( 'Authorization', `X-WPCALYPSO-SUPPORT-SESSION ${ hash }` );
 
-			setSupportSession( req, supportSession );
+			req.set( 'x-support-session', supportSession );
 		}
 
 		// start the request
