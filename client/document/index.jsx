@@ -61,7 +61,7 @@ class Document extends React.Component {
 			devDocsURL,
 			feedbackURL,
 			inlineScriptNonce,
-			isEvergreen,
+			addEvergreenCheck,
 		} = this.props;
 
 		const csskey = isRTL ? 'css.rtl' : 'css.ltr';
@@ -178,7 +178,7 @@ class Document extends React.Component {
 					// support to the fallback build. ES module support is a convenient
 					// test to determine that a browser is modern enough to handle
 					// the evergreen bundle.
-					isEvergreen && (
+					addEvergreenCheck && (
 						<script
 							nonce={ inlineScriptNonce }
 							noModule
