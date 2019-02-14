@@ -1,15 +1,8 @@
 /**
- * External dependencies
- */
-import { get } from 'lodash';
-
-/**
  * Internal dependencies
  */
 import { SESSION_ACTIVE, SESSION_EXPIRED } from './reducer';
 
-export function isSupportSession( state ) {
-	// Use lodash get to support querying server-provided state which may not include a `support` key.
-	const sessionState = get( state, [ 'support' ] );
-	return sessionState === SESSION_ACTIVE || sessionState === SESSION_EXPIRED;
+export function isSupportSession( { support } ) {
+	return support === SESSION_ACTIVE || support === SESSION_EXPIRED;
 }
