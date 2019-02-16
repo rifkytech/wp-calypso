@@ -20,6 +20,11 @@ import D3Base from 'components/d3-base';
 import Tooltip from 'components/tooltip';
 import LineChartLegend from './legend';
 
+/**
+ * Style dependencies
+ */
+import './style.scss';
+
 const CHART_MARGIN = 0.01;
 const POINTS_MAX = 10;
 const POINTS_SIZE = 3;
@@ -88,7 +93,9 @@ class LineChart extends Component {
 
 	static getDerivedStateFromProps( nextProps, prevState ) {
 		if ( prevState.data !== nextProps.data ) {
-			return { data: nextProps.data };
+			return {
+				data: nextProps.data,
+			};
 		}
 
 		// force refresh D3Base if fillArea has changed
@@ -204,14 +211,19 @@ class LineChart extends Component {
 						.attr( 'cx', xScale( datum.date ) )
 						.attr( 'cy', yScale( datum.value ) )
 						.attr( 'r', drawFullSeries ? POINTS_SIZE : POINTS_END_SIZE )
-						.datum( { ...datum, dataSeriesIndex } );
+						.datum( {
+							...datum,
+							dataSeriesIndex,
+						} );
 				}
 			);
 		} );
 	};
 
 	bindEvents = ( svg, params ) => {
-		const updateMouseMove = throttle( this.handleMouseMove, 100, { trailing: false } );
+		const updateMouseMove = throttle( this.handleMouseMove, 100, {
+			trailing: false,
+		} );
 		svg.on( 'mousemove', function() {
 			const coordinates = d3Mouse( this );
 			updateMouseMove( ...coordinates, params );
@@ -220,7 +232,9 @@ class LineChart extends Component {
 			// remove rect, temporary points and tooltips
 			svg.selectAll( `rect.line-chart__date-range-selected` ).remove();
 			svg.selectAll( `circle.line-chart__line-point-hover` ).remove();
-			this.setState( { selectedPoints: [] } );
+			this.setState( {
+				selectedPoints: [],
+			} );
 			// reset point size
 			svg.selectAll( `circle.line-chart__line-point` ).attr( 'r', POINTS_SIZE );
 		} );
@@ -247,7 +261,9 @@ class LineChart extends Component {
 		this.drawPoints( svg, params );
 		this.drawOverlayElement( svg, params );
 		this.bindEvents( svg, params );
-		this.setState( { svg } );
+		this.setState( {
+			svg,
+		} );
 	};
 
 	handleMouseMove = ( X, Y, params ) => {
@@ -301,7 +317,9 @@ class LineChart extends Component {
 					`circle.line-chart__line-point[cx="${ xScale( closestDate ) }"]`
 				);
 				selectedPoints.attr( 'r', Math.floor( POINTS_SIZE * POINT_HIGHLIGHT_SIZE_FACTOR ) );
-				this.setState( { selectedPoints: selectedPoints.nodes() } );
+				this.setState( {
+					selectedPoints: selectedPoints.nodes(),
+				} );
 			} else {
 				svg.selectAll( 'circle.line-chart__line-point-hover' ).remove();
 				let circles = [];
@@ -319,13 +337,18 @@ class LineChart extends Component {
 								.attr( 'cx', xScale( datum.date ) )
 								.attr( 'cy', yScale( datum.value ) )
 								.attr( 'r', Math.floor( POINTS_SIZE * POINT_HIGHLIGHT_SIZE_FACTOR ) )
-								.datum( { ...datum, dataSeriesIndex } );
+								.datum( {
+									...datum,
+									dataSeriesIndex,
+								} );
 							circles = circles.concat( circleSelection.nodes() );
 						}
 					} );
 				} );
 
-				this.setState( { selectedPoints: circles } );
+				this.setState( {
+					selectedPoints: circles,
+				} );
 			}
 		}
 	};
@@ -395,7 +418,9 @@ class LineChart extends Component {
 		// reset points
 		svg.selectAll( `circle.line-chart__line-point` ).attr( 'r', POINTS_SIZE );
 
-		this.setState( { selectedPoints: [] } );
+		this.setState( {
+			selectedPoints: [],
+		} );
 
 		data.forEach( ( dataSeries, dataSeriesIndex ) => {
 			const selected = selectedItemIndex === dataSeriesIndex;
@@ -419,7 +444,9 @@ class LineChart extends Component {
 					`circle.line-chart__line-point-color-${ dataSeriesIndex }`
 				);
 				selectedPoints.attr( 'r', Math.floor( POINTS_SIZE * POINT_HIGHLIGHT_SIZE_FACTOR ) );
-				this.setState( { selectedPoints: selectedPoints.nodes() } );
+				this.setState( {
+					selectedPoints: selectedPoints.nodes(),
+				} );
 			}
 		} );
 	};
@@ -494,7 +521,7 @@ class LineChart extends Component {
 					key={ uniqueKey }
 					isVisible
 				>
-					{ this.props.renderTooltipForDatanum( pointData ) }
+					{ this.props.renderTooltipForDatanum( pointData ) }{' '}
 				</Tooltip>
 			);
 		} );
@@ -510,21 +537,20 @@ class LineChart extends Component {
 
 		return (
 			<div className="line-chart">
+				{' '}
 				{ legendInfo && (
 					<LineChartLegend
 						data={ legendInfo }
 						onDataSeriesSelected={ this.handleDataSeriesSelected }
 					/>
 				) }
-
 				<D3Base
 					className="line-chart__base"
 					drawChart={ this.drawChart }
 					getParams={ this.getParams }
 					data={ data }
 				/>
-
-				{ this.renderTooltips() }
+				{ this.renderTooltips() }{' '}
 			</div>
 		);
 	}

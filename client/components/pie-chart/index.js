@@ -14,6 +14,11 @@ import { sortBy, sumBy } from 'lodash';
  */
 import DataType from './data-type';
 
+/**
+ * Style dependencies
+ */
+import './style.scss';
+
 const SVG_SIZE = 300;
 const NUM_COLOR_SECTIONS = 3;
 
@@ -97,15 +102,16 @@ class PieChart extends Component {
 					preserveAspectRatio={ 'xMidYMid meet' }
 				>
 					<g transform={ `translate(${ SVG_SIZE / 2 }, ${ SVG_SIZE / 2 })` }>
-						{ dataTotal > 0 ? this.renderPieChart() : this.renderEmptyChart() }
-					</g>
+						{' '}
+						{ dataTotal > 0 ? this.renderPieChart() : this.renderEmptyChart() }{' '}
+					</g>{' '}
 				</svg>
-
 				{ title && (
 					<h2 className="pie-chart__title">
-						{ 'string' === typeof title ? title : title( translate, dataTotal ) }
+						{' '}
+						{ 'string' === typeof title ? title : title( translate, dataTotal ) }{' '}
 					</h2>
-				) }
+				) }{' '}
 			</div>
 		);
 	}
